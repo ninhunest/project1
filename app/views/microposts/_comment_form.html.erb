@@ -1,7 +1,7 @@
 <div class="comment">
   <%= form_for([micropost, micropost.comments.build], remote: true) do |f| %>
     <div class="input-group">
-      <span class="input-group-addon comment-form"><%= link_to gravatar_for(current_user, size: 20),
+      <span class="input-group-addon comment-form"><%= link_to gravatar_for(current_user, size: 15),
         current_user %>
       </span>
       <div class="form-inline">
