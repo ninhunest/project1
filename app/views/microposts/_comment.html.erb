@@ -1,5 +1,5 @@
 <div class="input-group comment-user", id="comment_<%= comment.id %>">
-  <span class="input-group-addon comment-form-list"><%= link_to gravatar_for(comment.user, size: 20),
+  <span class="comment-form-list"><%= link_to gravatar_for(comment.user, size: 20),
     comment.user %></span>
   <div class="comment-text word-break">
     <%= link_to comment.user.name, comment.user %>
@@ -9,7 +9,7 @@
     <%= time_ago_in_words comment.created_at %>
       <% if comment.user.current_user? current_user %>
         <%= link_to t(".delete"), [comment.micropost, comment],
-          method: :delete, remote: true, data: {confirm: t(".sure")} %>
+           method: :delete, data: { confirm: "You sure?" } %>
     <% end %>
   </span>
 </div>

@@ -5,12 +5,23 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
 
     if @comment.save
-      flash[:success] = "create success"
-      redirect_to request.referer
+      respond_to do |format|
+        format.html do
+          flash[:success] = t "create_success"
+          redirect_to :back
+        end
+        format.js
+      end
     else
-      flash[:danger] =  "error"
-      redirect_to request.referer
+      flash[:danger] = t "error"
+      redirect_to :back
     end
+  end
+  def destroy
+    @comment = current_user.comments.find_by id: params[:id]
+    @comment.destroy
+    flash[:success] = "comment deleted"
+    redirect_to request.referrer || root_url
   end
   private
 
