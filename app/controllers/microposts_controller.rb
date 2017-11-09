@@ -3,9 +3,14 @@ class MicropostsController < ApplicationController
   before_action :correct_user,   only: :destroy
 
   def index
-    @microposts = Micropost.select(:id, :title, :content, :picture, :user_id, :created_at)
-      .sort_by_created_at.paginate page: params[:page],
-      per_page: 5
+    if params[:search]
+      @microposts = Micropost.search(params[:search]).sort_by_created_at.paginate page: params[:page],
+        per_page: 5
+    else
+      @microposts = Micropost.select(:id, :title, :content, :picture, :user_id, :created_at)
+        .sort_by_created_at.paginate page: params[:page],
+        per_page: 5
+    end
   end
 
   def create
