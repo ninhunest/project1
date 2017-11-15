@@ -7,20 +7,25 @@ class MicropostsController < ApplicationController
       @microposts = Micropost.search(params[:search]).sort_by_created_at.paginate page: params[:page],
         per_page: 5
     else
+<<<<<<< HEAD
       @microposts = Micropost.select(:id, :title, :content, :picture, :user_id, :created_at)
         .sort_by_created_at.paginate page: params[:page],
+=======
+      @microposts = Micropost.select(:id, :title, :content, :picture, :user_id,
+       :created_at).sort_by_created_at.paginate page: params[:page],
+>>>>>>> follow
         per_page: 5
     end
   end
 
   def create
-    @micropost = current_user.microposts.build(micropost_params)
+    @micropost = current_user.microposts.build micropost_params
     if @micropost.save
-      flash[:success] = "Micropost created!"
+      flash[:success] = t "micropost_created"
       redirect_to root_url
     else
       @feed_items = []
-      render 'static_pages/home'
+      render "static_pages/home"
     end
   end
 
@@ -33,11 +38,11 @@ class MicropostsController < ApplicationController
   private
 
   def micropost_params
-    params.require(:micropost).permit(:title, :content)
+    params.require(:micropost).permit :title, :content
   end
 
   def correct_user
-    @micropost = current_user.microposts.find_by(id: params[:id])
+    @micropost = current_user.microposts.find_by id: params[:id]
     redirect_to root_url if @micropost.nil?
   end
 end
